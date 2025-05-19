@@ -4,85 +4,90 @@ using UnityEngine;
 
 namespace UnityStandardAssets.ImageEffects
 {
-    [CustomEditor (typeof(ColorCorrectionLookup))]
+    [CustomEditor(typeof(ColorCorrectionLookup))]
     class ColorCorrectionLookupEditor : Editor
     {
         SerializedObject serObj;
-
-        void OnEnable () {
-            serObj = new SerializedObject (target);
-        }
-
         private Texture2D tempClutTex2D;
 
+        void OnEnable()
+        {
+            serObj = new SerializedObject(target);
+        }
 
-        public override void OnInspectorGUI () {
-            serObj.Update ();
+        public override void OnInspectorGUI()
+        {
+            serObj.Update();
 
             EditorGUILayout.LabelField("Converts textures into color lookup volumes (for grading)", EditorStyles.miniLabel);
 
-            //EditorGUILayout.LabelField("Change Lookup Texture (LUT):");
-            //EditorGUILayout.BeginHorizontal ();
-            //Rect r = GUILayoutUtility.GetAspectRect(1.0ff);
+            ColorCorrectionLookup effect = (ColorCorrectionLookup)target;
 
-            Rect r; Texture2D t;
-
-            //EditorGUILayout.Space();
-            tempClutTex2D = EditorGUILayout.ObjectField (" Based on", tempClutTex2D, typeof(Texture2D), false) as Texture2D;
-            if (tempClutTex2D == null) {
-                t = AssetDatabase.LoadMainAssetAtPath(((ColorCorrectionLookup)target).basedOnTempTex) as Texture2D;
-                if (t) tempClutTex2D = t;
+            tempClutTex2D = EditorGUILayout.ObjectField(" Based on", tempClutTex2D, typeof(Texture2D), false) as Texture2D;
+            if (tempClutTex2D == null && !string.IsNullOrEmpty(effect.basedOnTempTex))
+            {
+                tempClutTex2D = AssetDatabase.LoadAssetAtPath<Texture2D>(effect.basedOnTempTex);
             }
 
-            Texture2D tex = tempClutTex2D;
-
-            if (tex && (target as ColorCorrectionLookup).basedOnTempTex != AssetDatabase.GetAssetPath(tex))
+            if (tempClutTex2D != null)
             {
-                EditorGUILayout.Separator();
-                if (!(target as ColorCorrectionLookup).ValidDimensions(tex))
-                {
-                    EditorGUILayout.HelpBox ("Invalid texture dimensions!\nPick another texture or adjust dimension to e.g. 256x16.", MessageType.Warning);
-                }
-                else if (GUILayout.Button ("Convert and Apply"))
-                {
-                    string path = AssetDatabase.GetAssetPath (tex);
-                    TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
-                    bool doImport = textureImporter.isReadable == false;
-                    if (textureImporter.mipmapEnabled == true) {
-                        doImport = true;
-                    }
-                    if (textureImporter.textureFormat != TextureImporterFormat.AutomaticTruecolor) {
-                        doImport = true;
-                    }
+                string assetPath = AssetDatabase.GetAssetPath(tempClutTex2D);
 
-                    if (doImport)
+                if (effect.basedOnTempTex != assetPath)
+                {
+                    EditorGUILayout.Space();
+                    if (!effect.ValidDimensions(tempClutTex2D))
                     {
-                        textureImporter.isReadable = true;
-                        textureImporter.mipmapEnabled = false;
-                        textureImporter.textureFormat = TextureImporterFormat.AutomaticTruecolor;
-                        AssetDatabase.ImportAsset (path, ImportAssetOptions.ForceUpdate);
-                        //tex = AssetDatabase.LoadMainAssetAtPath(path);
+                        EditorGUILayout.HelpBox("Invalid texture dimensions!\nExpected: 256x16, 512x16, etc.", MessageType.Warning);
                     }
+                    else if (GUILayout.Button("Convert and Apply"))
+                    {
+                        TextureImporter importer = AssetImporter.GetAtPath(assetPath) as TextureImporter;
+                        if (importer != null)
+                        {
+                            bool needsReimport = false;
 
-                    (target as ColorCorrectionLookup).Convert(tex, path);
+                            if (!importer.isReadable)
+                            {
+                                importer.isReadable = true;
+                                needsReimport = true;
+                            }
+
+                            if (importer.mipmapEnabled)
+                            {
+                                importer.mipmapEnabled = false;
+                                needsReimport = true;
+                            }
+
+                            if (importer.textureCompression != TextureImporterCompression.Uncompressed)
+                            {
+                                importer.textureCompression = TextureImporterCompression.Uncompressed;
+                                needsReimport = true;
+                            }
+
+                            if (needsReimport)
+                            {
+                                AssetDatabase.ImportAsset(assetPath, ImportAssetOptions.ForceUpdate);
+                            }
+                        }
+
+                        effect.Convert(tempClutTex2D, assetPath);
+                    }
                 }
             }
 
-            if ((target as ColorCorrectionLookup).basedOnTempTex != "")
+            if (!string.IsNullOrEmpty(effect.basedOnTempTex))
             {
-                EditorGUILayout.HelpBox("Using " + (target as ColorCorrectionLookup).basedOnTempTex, MessageType.Info);
-                t = AssetDatabase.LoadMainAssetAtPath(((ColorCorrectionLookup)target).basedOnTempTex) as Texture2D;
-                if (t) {
-                    r = GUILayoutUtility.GetLastRect();
-                    r = GUILayoutUtility.GetRect(r.width, 20);
-                    r.x += r.width * 0.05f/2.0f;
-                    r.width *= 0.95f;
-                    GUI.DrawTexture (r, t);
-                    GUILayoutUtility.GetRect(r.width, 4);
+                EditorGUILayout.HelpBox("Using " + effect.basedOnTempTex, MessageType.Info);
+
+                Texture2D previewTex = AssetDatabase.LoadAssetAtPath<Texture2D>(effect.basedOnTempTex);
+                if (previewTex)
+                {
+                    Rect r = GUILayoutUtility.GetRect(128, 20);
+                    GUI.DrawTexture(r, previewTex, ScaleMode.ScaleToFit);
+                    GUILayout.Space(4);
                 }
             }
-
-            //EditorGUILayout.EndHorizontal ();
 
             serObj.ApplyModifiedProperties();
         }
