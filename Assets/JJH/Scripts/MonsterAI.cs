@@ -39,7 +39,7 @@ public class MonsterAI : MonoBehaviour
         {
             // 플레이어 추적
             agent.SetDestination(player.position);
-            animator.speed = 2.0f; // 빠르게 걷는 것처럼
+            animator.speed = 3.0f; // 빠르게 걷는 것처럼
             SetAnimation(true, false);
         }
         else if (!isAttacking)
