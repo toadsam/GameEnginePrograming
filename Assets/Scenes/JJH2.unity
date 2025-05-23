@@ -1022,7 +1022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0525e35e6ca236147ae26eb9c8a97496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1117453415}
+  player: {fileID: 433946488}
   chaseDistance: 8
   attackDistance: 2
   wanderRadius: 10
