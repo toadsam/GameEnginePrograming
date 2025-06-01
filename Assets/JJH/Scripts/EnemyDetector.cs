@@ -2,14 +2,25 @@
 
 public class EnemyDetector : MonoBehaviour
 {
+    public enum EnemyState
+    {
+        Idle,
+        Chasing
+    }
+
     [Header("시야 설정")]
-    public float viewAngle = 90f;     // 부채꼴 각도
-    public float viewRange = 10f;     // 시야 거리
+    public float viewAngle = 90f;
+    public float viewRange = 10f;
 
     [Header("손전등 참조")]
     public Transform playerTransform;
     public Transform playerFlashlightObject;
     private PlayerFlashlight flashlight;
+
+    private float loseSightTimer = 0f;
+    private float loseSightDelay = 5f;
+
+    public EnemyState currentState = EnemyState.Idle;
 
     private void Start()
     {
@@ -22,23 +33,38 @@ public class EnemyDetector : MonoBehaviour
     {
         if (flashlight == null || playerTransform == null) return;
 
-        bool seesPlayer = IsPlayerInFOV();
-        bool seesFlashlight = IsLightConeInFOV();
-
-        if (seesPlayer)
-            Debug.Log("🔴 조건1: 적이 플레이어를 직접 시야로 감지");
-
-        if (seesFlashlight)
-            Debug.Log("🔦 조건2: 적이 손전등의 빛 범위를 감지");
+        bool seesPlayer = IsPlayerInFOV(); // 조건 1
+        bool seesFlashlight = flashlight.IsEnabled() && IsLightConeInFOV(); // 조건 2 (손전등이 켜져 있을 때만)
 
         if (seesPlayer || seesFlashlight)
         {
-            Debug.Log("🎯 적이 감지 조건을 만족! 추적 시작");
-            GameManager.Instance.ToggleDollBehavior(true);
+            loseSightTimer = 0f;
+            // 추적 시작
+            if (currentState != EnemyState.Chasing)
+            {
+                Debug.Log("🎯 적 A 추적 시작!");
+                currentState = EnemyState.Chasing;
+                GameManager.Instance.ToggleDollBehavior(true);
+            }
 
+            loseSightTimer = 0f; // 추적 유지 중
         }
-            
+        else
+        {
+            // 감지 안 될 경우 타이머 시작
+            if (currentState == EnemyState.Chasing)
+            {
+                loseSightTimer += Time.deltaTime;
 
+                if (loseSightTimer >= loseSightDelay)
+                {
+                    Debug.Log("🛑 적 A 추적 중단");
+                    GameManager.Instance.ToggleDollBehavior(false);
+                    currentState = EnemyState.Idle;
+                    loseSightTimer = 0f;
+                }
+            }
+        }
     }
 
     private bool IsPlayerInFOV()
@@ -57,9 +83,7 @@ public class EnemyDetector : MonoBehaviour
         Vector3 coneOrigin = flashlight.GetConeOrigin();
         Vector3 coneDir = flashlight.GetConeDirection();
         float coneRange = flashlight.GetConeRange();
-        float coneAngle = flashlight.GetConeAngle(); // 반각도
 
-        // 적의 시야 안에서, cone 범위가 겹치는지 판단
         int sampleCount = 10;
         for (int i = 0; i <= sampleCount; i++)
         {
@@ -71,13 +95,12 @@ public class EnemyDetector : MonoBehaviour
             float angle = Vector3.Angle(transform.forward, toSample.normalized);
 
             if (dist <= viewRange && angle <= viewAngle * 0.5f)
-                return true; // 적의 시야 안에 빛 cone의 일부가 들어옴
+                return true;
         }
 
         return false;
     }
 
-    // ✅ 디버깅용 FOV 시각화
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;

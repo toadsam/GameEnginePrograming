@@ -1,10 +1,48 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class PlayerFlashlight : MonoBehaviour
 {
+    public enum FlashlightState { Off, On }
+    public FlashlightState currentState = FlashlightState.On;
+    private Light spotlight;
+    void Start()
+    {
+        spotlight = GetComponent<Light>();
+        if (spotlight == null)
+            Debug.LogWarning("Spotlight ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ToggleFlashlight();
+        }
+    }
+
+    public void ToggleFlashlight()
+    {
+        if (currentState == FlashlightState.Off)
+        {
+            currentState = FlashlightState.On;
+            spotlight.enabled = true;
+        }
+        else
+        {
+            currentState = FlashlightState.Off;
+            spotlight.enabled = false;
+        }
+
+        Debug.Log($"ğŸ”¦ ì†ì „ë“± ìƒíƒœ: {currentState}");
+    }
+
+    public bool IsEnabled()
+    {
+        return currentState == FlashlightState.On;
+    }
     public float spotAngle = 20f;
     public float range = 15f;
-    public Color coneColor = Color.yellow; // µğ¹ö±× »ö»ó
+    public Color coneColor = Color.yellow; // ë””ë²„ê·¸ ìƒ‰ìƒ
 
     public Vector3 GetConeOrigin() => transform.position;
     public Vector3 GetConeDirection() => transform.forward.normalized;
@@ -22,18 +60,18 @@ public class PlayerFlashlight : MonoBehaviour
         Vector3 rightDir = Quaternion.Euler(0, halfAngle, 0) * forward;
         Vector3 leftDir = Quaternion.Euler(0, -halfAngle, 0) * forward;
 
-        // ºû ÆÛÁö´Â ¹æÇâ ¶óÀÎ
+        // ë¹› í¼ì§€ëŠ” ë°©í–¥ ë¼ì¸
         Gizmos.DrawLine(origin, origin + rightDir * range);
         Gizmos.DrawLine(origin, origin + leftDir * range);
 
-        // °¡¿îµ¥ Á÷¼±
+        // ê°€ìš´ë° ì§ì„ 
         Gizmos.DrawLine(origin, origin + forward * range);
 
-        // ¿øÇü ¿Ü°û ±×¸®±â
+        // ì›í˜• ì™¸ê³½ ê·¸ë¦¬ê¸°
         DrawConeArc(origin, forward, halfAngle, range, 20);
     }
 
-    // ¿øÈ£(Arc)¸¦ ±×·ÁÁÖ´Â ÇÔ¼ö
+    // ì›í˜¸(Arc)ë¥¼ ê·¸ë ¤ì£¼ëŠ” í•¨ìˆ˜
     void DrawConeArc(Vector3 origin, Vector3 forward, float halfAngle, float radius, int segments)
     {
         float angleStep = (halfAngle * 2) / segments;
