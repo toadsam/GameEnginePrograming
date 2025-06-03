@@ -724,7 +724,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4913005085238046037, guid: 259d1de4507c3624c829968c95835990, type: 3}
       propertyPath: m_Name
-      value: SKM_DemonDoll_Var1 (1)
+      value: DemonDoll
       objectReference: {fileID: 0}
     - target: {fileID: 4913005085238046037, guid: 259d1de4507c3624c829968c95835990, type: 3}
       propertyPath: m_IsActive
@@ -743,7 +743,56 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4913005085238046037, guid: 259d1de4507c3624c829968c95835990, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2090556943}
+    - targetCorrespondingSourceObject: {fileID: 4913005085238046037, guid: 259d1de4507c3624c829968c95835990, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2090556947}
   m_SourcePrefab: {fileID: 100100000, guid: 259d1de4507c3624c829968c95835990, type: 3}
+--- !u!1 &946769478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 946769480}
+  - component: {fileID: 946769479}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &946769479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946769478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbbdfa008d8b9d54fa70022de56b4ebd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dollMonster: {fileID: 2090556943}
+  bookheadMonster: {fileID: 1377108852}
+--- !u!4 &946769480
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946769478}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.81, y: -10.012, z: 0.51}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &958952043
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,6 +1039,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0525e35e6ca236147ae26eb9c8a97496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterType: 1
+  dollCanChaseAndAttack: 0
+  bookheadCanChaseAndAttack: 1
   player: {fileID: 1117453415}
   chaseDistance: 30
   attackDistance: 10
@@ -1006,13 +1058,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1162517570}
   - component: {fileID: 1162517569}
+  - component: {fileID: 1162517571}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &1162517569
 Light:
   m_ObjectHideFlags: 0
@@ -1093,6 +1146,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1162517571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162517568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1346975137
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1119,7 +1184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 77.05
+      value: 27.86
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1182,10 +1247,10 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1959908821}
-    - targetCorrespondingSourceObject: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 70868931}
+    - targetCorrespondingSourceObject: {fileID: 400002, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1959908821}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100002, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       insertIndex: -1
@@ -1201,7 +1266,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 88509115014108045, guid: d6edcf5cfcd2926408a27068b783227b, type: 3}
       propertyPath: m_Name
-      value: BookHeadMonster_withBlood
+      value: BookHeadMonster
       objectReference: {fileID: 0}
     - target: {fileID: 88509115014108045, guid: d6edcf5cfcd2926408a27068b783227b, type: 3}
       propertyPath: m_IsActive
@@ -1221,7 +1286,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 752561002829875511, guid: d6edcf5cfcd2926408a27068b783227b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.07
+      value: -3.33
       objectReference: {fileID: 0}
     - target: {fileID: 752561002829875511, guid: d6edcf5cfcd2926408a27068b783227b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1272,6 +1337,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 88509115014108045, guid: d6edcf5cfcd2926408a27068b783227b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1377108855}
+    - targetCorrespondingSourceObject: {fileID: 88509115014108045, guid: d6edcf5cfcd2926408a27068b783227b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1377108857}
   m_SourcePrefab: {fileID: 100100000, guid: d6edcf5cfcd2926408a27068b783227b, type: 3}
 --- !u!1 &1377108851 stripped
 GameObject:
@@ -1290,6 +1358,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0525e35e6ca236147ae26eb9c8a97496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterType: 1
+  dollCanChaseAndAttack: 1
+  bookheadCanChaseAndAttack: 1
   player: {fileID: 1117453415}
   chaseDistance: 20
   attackDistance: 2
@@ -1340,6 +1411,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1377108857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377108851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58ccdc9e1f0cd064398e93a6920179f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRadius: 16.07
+  playerTransform: {fileID: 1117453415}
+  flashlight: {fileID: 1959908823}
+  currentState: 0
 --- !u!1001 &1390521734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1541,6 +1628,11 @@ MonoBehaviour:
   strengthX: 0
   strengthY: 0.1
   fishEyeShader: {fileID: 4800000, guid: 874ceab4425f64bccb1d14032f4452b1, type: 3}
+--- !u!4 &1706553842 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400002, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+  m_PrefabInstance: {fileID: 1346975137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1707261291
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,13 +2000,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1959908821}
   - component: {fileID: 1959908822}
+  - component: {fileID: 1959908823}
   m_Layer: 0
   m_Name: Spot Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1959908821
 Transform:
   m_ObjectHideFlags: 0
@@ -1923,12 +2016,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959908820}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000059604645, y: 0.000000059604645, z: -0.7071068, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: 0, z: 1.262}
+  m_LocalRotation: {x: -0.00000005960465, y: 0.00000005960465, z: -0.7071068, w: 0.70710677}
+  m_LocalPosition: {x: 0, y: -0.8, z: 1.2619997}
   m_LocalScale: {x: 1, y: 5, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1117453415}
+  m_Father: {fileID: 1706553842}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!108 &1959908822
 Light:
@@ -1942,9 +2035,9 @@ Light:
   m_Type: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 3.95
-  m_Range: 9.55
-  m_SpotAngle: 18.4
-  m_InnerSpotAngle: 4.5
+  m_Range: 20
+  m_SpotAngle: 15
+  m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -1995,6 +2088,22 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!114 &1959908823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959908820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9560fa90b6148448bf8ea9e8474c225, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 1
+  spotAngle: 20
+  range: 15
+  coneColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
 --- !u!1 &2090556941 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4913005085238046037, guid: 259d1de4507c3624c829968c95835990, type: 3}
@@ -2012,6 +2121,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0525e35e6ca236147ae26eb9c8a97496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterType: 0
+  dollCanChaseAndAttack: 1
+  bookheadCanChaseAndAttack: 1
   player: {fileID: 1117453415}
   chaseDistance: 20
   attackDistance: 2
@@ -2028,7 +2140,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 8
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -2062,6 +2174,23 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2090556947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090556941}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bddd681e1deedf84691640b2cc9f9568, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewAngle: 60
+  viewRange: 30
+  playerTransform: {fileID: 1117453415}
+  playerFlashlightObject: {fileID: 1959908821}
+  currentState: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2081,3 +2210,4 @@ SceneRoots:
   - {fileID: 390961266}
   - {fileID: 400538691}
   - {fileID: 1599727840}
+  - {fileID: 946769480}
