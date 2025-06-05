@@ -33,7 +33,7 @@ public class EnemyLightZoneDetector : MonoBehaviour
             {
                 Debug.Log("🔵 적 B: 추적 시작");
                 currentState = EnemyState.Chasing;
-                GameManager.Instance.ToggleBookheadBehavior(true);
+                EnemyManager.Instance.ToggleBookheadBehavior(true);
             }
 
             loseSightTimer = 0f;
@@ -47,7 +47,7 @@ public class EnemyLightZoneDetector : MonoBehaviour
                 if (loseSightTimer >= loseSightDelay)
                 {
                     Debug.Log("🛑 적 B: 추적 중단");
-                    GameManager.Instance.ToggleBookheadBehavior(false);
+                    EnemyManager.Instance.ToggleBookheadBehavior(false);
                     currentState = EnemyState.Idle;
                     loseSightTimer = 0f;
                 }

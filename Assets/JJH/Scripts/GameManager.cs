@@ -1,49 +1,35 @@
 using UnityEngine;
 
+public enum GamePhase
+{
+    Title,
+    Ingame,
+    GameOver
+}
 public class GameManager : MonoBehaviour
 {
-    // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º
     public static GameManager Instance { get; private set; }
 
-    [Header("¾À¿¡ ¹èÄ¡µÈ ¸ó½ºÅÍ ·¹ÆÛ·±½º")]
-    public MonsterAI dollMonster;
-    public MonsterAI bookheadMonster;
+    [Header("ê²Œì„ ìƒíƒœ")]
+    public GamePhase CurrentPhase { get; private set; } = GamePhase.Title;
 
-    void Awake()
+    private void Awake()
     {
-        // ½Ì±ÛÅæ ÀÎ½ºÅÏ½º ¼³Á¤
+        // ì‹±ê¸€í†¤ ì„¤ì •
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // ì”¬ ì „í™˜ ì‹œ ìœ ì§€
         }
-        else if (Instance != this)
+        else
         {
             Destroy(gameObject);
-            return;
         }
     }
 
-    void Start()
+    public void SetPhase(GamePhase phase)
     {
-        // ¿¹½Ã: °ÔÀÓ ½ÃÀÛÇÏÀÚ¸¶ÀÚ µÑ ´Ù OFF
-        if (dollMonster != null)
-            dollMonster.DisableChaseAndAttack();
-
-        if (bookheadMonster != null)
-            bookheadMonster.DisableChaseAndAttack();
-    }
-
-    // UI ¹öÆ°ÀÌ³ª ÀÌº¥Æ®¿¡¼­ È£ÃâÇÒ ¼ö ÀÖµµ·Ï °ø°³ ¸Ş¼­µå
-    public void ToggleDollBehavior(bool on)
-    {
-        if (dollMonster != null)
-            dollMonster.SetChaseAndAttackEnabled(on);
-    }
-
-    public void ToggleBookheadBehavior(bool on)
-    {
-        if (bookheadMonster != null)
-            bookheadMonster.SetChaseAndAttackEnabled(on);
+        CurrentPhase = phase;
+        Debug.Log($"ğŸ”„ ê²Œì„ ìƒíƒœ ë³€ê²½: {phase}");
     }
 }

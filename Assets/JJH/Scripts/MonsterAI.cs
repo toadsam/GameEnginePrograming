@@ -10,20 +10,20 @@ public class MonsterAI : MonoBehaviour
         BookheadMonster
     }
 
-    [Header("¸ó½ºÅÍ Å¸ÀÔ ¼³Á¤")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public MonsterType monsterType = MonsterType.BookheadMonster;
 
-    [Header("°¢ Å¸ÀÔº° ÃßÀû/°ø°İ Çã¿ë ¿©ºÎ")]
+    [Header("ï¿½ï¿½ Å¸ï¿½Ôºï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public bool dollCanChaseAndAttack = false;
     public bool bookheadCanChaseAndAttack = true;
 
-    [Header("°øÅë ¼³Á¤")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public Transform player;
-    public float chaseDistance = 8f;       // ÃßÀû ½ÃÀÛ °Å¸®
-    public float attackDistance = 2f;      // °ø°İ ¹üÀ§
-    public float wanderRadius = 10f;       // ¼øÂû ¹İ°æ
-    public float wanderTimer = 5f;         // ¼øÂû °£°İ
-    public float attackDuration = 1.2f;    // °ø°İ ¾Ö´Ï¸ŞÀÌ¼Ç Áö¼Ó ½Ã°£
+    public float chaseDistance = 8f;       // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½
+    public float attackDistance = 2f;      // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float wanderRadius = 10f;       // ï¿½ï¿½ï¿½ï¿½ ï¿½İ°ï¿½
+    public float wanderTimer = 5f;         // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float attackDuration = 1.2f;    // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -39,17 +39,17 @@ public class MonsterAI : MonoBehaviour
 
     void Update()
     {
-        // 1) ÇöÀç ÀÌ ¸ó½ºÅÍ°¡ ¡°ÃßÀû/°ø°İ Çã¿ë »óÅÂ¡±ÀÎÁö ÆÇº°
+        // 1) ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¡ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Çºï¿½
         bool isEnabled = (monsterType == MonsterType.Doll)
                             ? dollCanChaseAndAttack
                             : bookheadCanChaseAndAttack;
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // 2) Çã¿ë »óÅÂÀÌ°í, °Å¸® Á¶°ÇÀÌ ¸¸Á·µÉ ¶§¸¸ °ø°İ/ÃßÀû
+        // 2) ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì°ï¿½, ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½
         if (isEnabled && distanceToPlayer <= attackDistance && !isAttacking)
         {
-            // °ø°İ »óÅÂ
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             agent.SetDestination(transform.position);
             animator.speed = 1f;
             SetAnimation(false, true);
@@ -57,14 +57,14 @@ public class MonsterAI : MonoBehaviour
         }
         else if (isEnabled && distanceToPlayer <= chaseDistance && !isAttacking)
         {
-            // ÃßÀû »óÅÂ
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             agent.SetDestination(player.position);
             animator.speed = 3f;
             SetAnimation(true, false);
         }
         else
         {
-            // ¼øÂû »óÅÂ
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (!isAttacking)
             {
                 timer += Time.deltaTime;
@@ -107,10 +107,10 @@ public class MonsterAI : MonoBehaviour
     }
 
     // ============================
-    // 3) public ¸Ş¼­µå Ãß°¡: °¢ boolÀ» ÄÑ°í ²ø ¼ö ÀÖµµ·Ï
+    // 3) public ï¿½Ş¼ï¿½ï¿½ï¿½ ï¿½ß°ï¿½: ï¿½ï¿½ boolï¿½ï¿½ ï¿½Ñ°ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Öµï¿½ï¿½ï¿½
     // ============================
     /// <summary>
-    /// ÀÌ ¸ó½ºÅÍ°¡ ¼ÓÇÑ Å¸ÀÔ¿¡ ¸ÂÃß¾î chase/attack Çã¿ë(true) ¶Ç´Â ºñÇã¿ë(false)À¸·Î ¼³Á¤ÇÑ´Ù.
+    /// ï¿½ï¿½ ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ß¾ï¿½ chase/attack ï¿½ï¿½ï¿½(true) ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½(false)ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
     /// </summary>
     public void SetChaseAndAttackEnabled(bool enabled)
     {
@@ -121,7 +121,7 @@ public class MonsterAI : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇöÀç ¸ó½ºÅÍÀÇ ÃßÀû/°ø°İÀ» È°¼ºÈ­ÇÑ´Ù.
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È°ï¿½ï¿½È­ï¿½Ñ´ï¿½.
     /// </summary>
     public void EnableChaseAndAttack()
     {
@@ -129,10 +129,22 @@ public class MonsterAI : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇöÀç ¸ó½ºÅÍÀÇ ÃßÀû/°ø°İÀ» ºñÈ°¼ºÈ­ÇÑ´Ù.
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ï¿½Ñ´ï¿½.
     /// </summary>
     public void DisableChaseAndAttack()
     {
         SetChaseAndAttackEnabled(false);
     }
+
+    public bool IsChasingPlayer()
+{
+    float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+    bool isEnabled = (monsterType == MonsterType.Doll)
+                        ? dollCanChaseAndAttack
+                        : bookheadCanChaseAndAttack;
+
+    // ì¶”ì  ì¤‘ì´ë©´ true
+    return isEnabled && distanceToPlayer <= chaseDistance && distanceToPlayer > attackDistance;
+}
 }

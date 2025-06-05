@@ -44,7 +44,7 @@ public class EnemyDetector : MonoBehaviour
             {
                 Debug.Log("🎯 적 A 추적 시작!");
                 currentState = EnemyState.Chasing;
-                GameManager.Instance.ToggleDollBehavior(true);
+                EnemyManager.Instance.ToggleDollBehavior(true);
             }
 
             loseSightTimer = 0f; // 추적 유지 중
@@ -59,7 +59,7 @@ public class EnemyDetector : MonoBehaviour
                 if (loseSightTimer >= loseSightDelay)
                 {
                     Debug.Log("🛑 적 A 추적 중단");
-                    GameManager.Instance.ToggleDollBehavior(false);
+                    EnemyManager.Instance.ToggleDollBehavior(false);
                     currentState = EnemyState.Idle;
                     loseSightTimer = 0f;
                 }
