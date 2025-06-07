@@ -33,13 +33,23 @@ public class MonsterAI : MonoBehaviour
     [Header("공격 시 UI")]
     public GameObject scareUI;             // 깜짝 UI 오브젝트
     public float scareUIDistance = 1.5f;   // 이 거리 안으로 들어오면 UI 표시
+    public AudioClip scareSound;           // UI 깜짝 연출 사운드
     private bool uiTriggered = false;      // 중복 표시 방지
+
+    [Header("추적 시작 시 사운드")]
+    public AudioClip chaseSound;
+    private AudioSource audioSource;
+    private bool hasPlayedChaseSound = false;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         timer = wanderTimer;
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
 
         if (scareUI != null)
             scareUI.SetActive(false); // 초기 비활성화
@@ -67,6 +77,13 @@ public class MonsterAI : MonoBehaviour
             agent.SetDestination(player.position);
             animator.speed = 3f;
             SetAnimation(true, false);
+
+            // 추적 시작 시 사운드 재생
+            if (!hasPlayedChaseSound && chaseSound != null)
+            {
+                audioSource.PlayOneShot(chaseSound);
+                hasPlayedChaseSound = true;
+            }
         }
         // 순찰
         else
@@ -85,6 +102,8 @@ public class MonsterAI : MonoBehaviour
                 animator.speed = 1f;
                 SetAnimation(isMoving, false);
             }
+
+            hasPlayedChaseSound = false; // 추적 종료 시 리셋
         }
 
         // 📣 UI 깜짝 연출
@@ -92,9 +111,14 @@ public class MonsterAI : MonoBehaviour
         {
             if (scareUI != null)
             {
-                Debug.Log("여기로 들어왔으면 좋겠다");
+                Debug.Log("✅ 깜짝 UI 표시");
                 scareUI.SetActive(true);
                 uiTriggered = true;
+
+                // 📢 깜짝 사운드 재생
+                if (scareSound != null)
+                    audioSource.PlayOneShot(scareSound);
+
                 Invoke("HideScareUI", 1.5f); // 자동 숨김
             }
         }
@@ -153,13 +177,11 @@ public class MonsterAI : MonoBehaviour
         return isEnabled && distanceToPlayer <= chaseDistance && distanceToPlayer > attackDistance;
     }
 
-    // UI 숨기기 함수
     private void HideScareUI()
     {
         if (scareUI != null)
-        {
             scareUI.SetActive(false);
-        }
+
         uiTriggered = false;
     }
 }
