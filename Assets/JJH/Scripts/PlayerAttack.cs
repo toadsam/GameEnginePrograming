@@ -14,6 +14,8 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 
