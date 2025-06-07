@@ -1,18 +1,43 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
 public class DisappearOnWeaponHit : MonoBehaviour
 {
-    [Header("¸ÂÀ¸¸é 3ÃÊ ÈÄ »ç¶óÁú ¿ÀºêÁ§Æ®")]
+    [Header("ë§ìœ¼ë©´ 3ì´ˆ í›„ ì‚¬ë¼ì§ˆ ì˜¤ë¸Œì íŠ¸")]
     public GameObject targetObject;
 
-    [Header("¸Â´Â ÅÂ±×")]
+    [Header("ë§ëŠ” íƒœê·¸")]
     public string weaponTag = "Weapon";
+
+    [Header("ì¶©ëŒ ì‹œ ì¬ìƒí•  ì‚¬ìš´ë“œ")]
+    public AudioClip hitSound;
+
+    [Header("ì™¸ë¶€ Animator (ì˜ˆ: Doll Animator)")]
+    public Animator targetAnimator;  // âœ… ì™¸ë¶€ Animator ì—°ê²°
+
+    private AudioSource audioSource;
+    private bool isDead = false;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = gameObject.AddComponent<AudioSource>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (isDead) return;
         if (other.CompareTag(weaponTag))
         {
+            isDead = true;
+
+            if (hitSound != null)
+                audioSource.PlayOneShot(hitSound);
+
+            if (targetAnimator != null)
+                targetAnimator.SetBool("isDie", true);  // âœ… Boolë¡œ ì• ë‹ˆë©”ì´ì…˜ ì „ì´ íŠ¸ë¦¬ê±°
+
             StartCoroutine(RemoveAfterDelay(3f));
         }
     }
