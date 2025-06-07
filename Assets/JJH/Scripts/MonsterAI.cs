@@ -10,61 +10,67 @@ public class MonsterAI : MonoBehaviour
         BookheadMonster
     }
 
-    [Header("���� Ÿ�� ����")]
+    [Header("몬스터 타입 설정")]
     public MonsterType monsterType = MonsterType.BookheadMonster;
 
-    [Header("�� Ÿ�Ժ� ����/���� ��� ����")]
+    [Header("각 타입별 추적/공격 허용 여부")]
     public bool dollCanChaseAndAttack = false;
     public bool bookheadCanChaseAndAttack = true;
 
-    [Header("���� ����")]
+    [Header("공통 설정")]
     public Transform player;
-    public float chaseDistance = 8f;       // ���� ���� �Ÿ�
-    public float attackDistance = 2f;      // ���� ����
-    public float wanderRadius = 10f;       // ���� �ݰ�
-    public float wanderTimer = 5f;         // ���� ����
-    public float attackDuration = 1.2f;    // ���� �ִϸ��̼� ���� �ð�
+    public float chaseDistance = 8f;       // 추적 시작 거리
+    public float attackDistance = 2f;      // 공격 범위
+    public float wanderRadius = 10f;       // 순찰 반경
+    public float wanderTimer = 5f;         // 순찰 간격
+    public float attackDuration = 1.2f;    // 공격 애니메이션 지속 시간
 
     private NavMeshAgent agent;
     private Animator animator;
     private float timer;
     private bool isAttacking = false;
 
+    [Header("공격 시 UI")]
+    public GameObject scareUI;             // 깜짝 UI 오브젝트
+    public float scareUIDistance = 1.5f;   // 이 거리 안으로 들어오면 UI 표시
+    private bool uiTriggered = false;      // 중복 표시 방지
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         timer = wanderTimer;
+
+        if (scareUI != null)
+            scareUI.SetActive(false); // 초기 비활성화
     }
 
     void Update()
     {
-        // 1) ���� �� ���Ͱ� ������/���� ��� ���¡����� �Ǻ�
         bool isEnabled = (monsterType == MonsterType.Doll)
                             ? dollCanChaseAndAttack
                             : bookheadCanChaseAndAttack;
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // 2) ��� �����̰�, �Ÿ� ������ ������ ���� ����/����
+        // 공격
         if (isEnabled && distanceToPlayer <= attackDistance && !isAttacking)
         {
-            // ���� ����
             agent.SetDestination(transform.position);
             animator.speed = 1f;
             SetAnimation(false, true);
             StartCoroutine(EndAttackAfter(attackDuration));
         }
+        // 추적
         else if (isEnabled && distanceToPlayer <= chaseDistance && !isAttacking)
         {
-            // ���� ����
             agent.SetDestination(player.position);
             animator.speed = 3f;
             SetAnimation(true, false);
         }
+        // 순찰
         else
         {
-            // ���� ����
             if (!isAttacking)
             {
                 timer += Time.deltaTime;
@@ -78,6 +84,18 @@ public class MonsterAI : MonoBehaviour
                 bool isMoving = agent.velocity.magnitude > 0.1f;
                 animator.speed = 1f;
                 SetAnimation(isMoving, false);
+            }
+        }
+
+        // 📣 UI 깜짝 연출
+        if (!uiTriggered && isEnabled && distanceToPlayer <= scareUIDistance && distanceToPlayer <= attackDistance)
+        {
+            if (scareUI != null)
+            {
+                Debug.Log("여기로 들어왔으면 좋겠다");
+                scareUI.SetActive(true);
+                uiTriggered = true;
+                Invoke("HideScareUI", 1.5f); // 자동 숨김
             }
         }
     }
@@ -106,12 +124,6 @@ public class MonsterAI : MonoBehaviour
         return navHit.position;
     }
 
-    // ============================
-    // 3) public �޼��� �߰�: �� bool�� �Ѱ� �� �� �ֵ���
-    // ============================
-    /// <summary>
-    /// �� ���Ͱ� ���� Ÿ�Կ� ���߾� chase/attack ���(true) �Ǵ� �����(false)���� �����Ѵ�.
-    /// </summary>
     public void SetChaseAndAttackEnabled(bool enabled)
     {
         if (monsterType == MonsterType.Doll)
@@ -120,31 +132,34 @@ public class MonsterAI : MonoBehaviour
             bookheadCanChaseAndAttack = enabled;
     }
 
-    /// <summary>
-    /// ���� ������ ����/������ Ȱ��ȭ�Ѵ�.
-    /// </summary>
     public void EnableChaseAndAttack()
     {
         SetChaseAndAttackEnabled(true);
     }
 
-    /// <summary>
-    /// ���� ������ ����/������ ��Ȱ��ȭ�Ѵ�.
-    /// </summary>
     public void DisableChaseAndAttack()
     {
         SetChaseAndAttackEnabled(false);
     }
 
     public bool IsChasingPlayer()
-{
-    float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+    {
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-    bool isEnabled = (monsterType == MonsterType.Doll)
-                        ? dollCanChaseAndAttack
-                        : bookheadCanChaseAndAttack;
+        bool isEnabled = (monsterType == MonsterType.Doll)
+                            ? dollCanChaseAndAttack
+                            : bookheadCanChaseAndAttack;
 
-    // 추적 중이면 true
-    return isEnabled && distanceToPlayer <= chaseDistance && distanceToPlayer > attackDistance;
-}
+        return isEnabled && distanceToPlayer <= chaseDistance && distanceToPlayer > attackDistance;
+    }
+
+    // UI 숨기기 함수
+    private void HideScareUI()
+    {
+        if (scareUI != null)
+        {
+            scareUI.SetActive(false);
+        }
+        uiTriggered = false;
+    }
 }
