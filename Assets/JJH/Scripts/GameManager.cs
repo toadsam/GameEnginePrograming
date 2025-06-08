@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     [Header("게임 상태")]
     public GamePhase CurrentPhase { get; private set; } = GamePhase.Title;
 
+    [Header("편지 UI 배열")]
+    public GameObject[] letterDetails;
+
     private void Awake()
     {
         // 싱글톤 설정
