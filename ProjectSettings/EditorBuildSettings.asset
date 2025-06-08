@@ -11,6 +11,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/JJH3.unity
     guid: bd2d9de705bea294681dc0262ef89005
+  - enabled: 1
+    path: Assets/Scenes/DeadEndingScene.unity
+    guid: 9e7f5c3a56d603a419c6270b71daaf30
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 289c1b55c9541489481df5cc06664110, type: 3}
   m_UseUCBPForAssetBundles: 0

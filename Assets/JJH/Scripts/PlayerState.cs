@@ -81,11 +81,11 @@ private void CheckOneEnemy(GameObject enemy)
     if (ai != null && ai.IsChasingPlayer()) // ✅ 상태 체크 메서드로 교체
     {
         float dist = Vector3.Distance(transform.position, ai.transform.position);
-        if (dist <= 1f)
+        if (dist <= 5f)
         {
             Debug.Log("☠️ 적에게 잡힘 - DeadEnding");
             GameManager.Instance.SetPhase(GamePhase.GameOver);
-            GameSceneManager.LoadDeadEndingScene();
+            GameSceneManager.Instance.LoadDeadEndingScene();
         }
     }
 }
