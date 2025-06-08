@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -84,9 +85,16 @@ private void CheckOneEnemy(GameObject enemy)
         if (dist <= 5f)
         {
             Debug.Log("☠️ 적에게 잡힘 - DeadEnding");
-            GameManager.Instance.SetPhase(GamePhase.GameOver);
-            GameSceneManager.Instance.LoadDeadEndingScene();
-        }
+                StartCoroutine(TriggerGameOverAfterDelay());
+            }
     }
 }
+
+
+    private IEnumerator TriggerGameOverAfterDelay()
+    {
+        yield return new WaitForSeconds(3f); // 3초 대기
+        GameManager.Instance.SetPhase(GamePhase.GameOver);
+        GameSceneManager.Instance.LoadDeadEndingScene();
+    }
 }
