@@ -17,7 +17,7 @@ public class InteractionManager : MonoBehaviour
     public GameObject interactionUI;
 
     [Header("Letter 관련")]
-    public GameObject[] letterDetails; // detail1 ~ detail5
+    //public GameObject[] letterDetails; // detail1 ~ detail5
 
     [Header("아이템 UI")]
     public GameObject crowbarUI;
@@ -67,19 +67,19 @@ public class InteractionManager : MonoBehaviour
 
     private void HandleLetterInteraction()
     {
-        int letterCount = playerState.GetLetterCount();
+        int letterCount = GameManager.Instance.GetLetterCount();
 
-        if (letterCount < letterDetails.Length)
+        if (letterCount < GameManager.Instance.letterDetails.Length)
         {
-            letterDetails[letterCount].SetActive(true); // 0~4 인덱스
-            playerState.CollectLetter(); // 내부에서 count 증가
-
+            GameManager.Instance.CollectLetter(); // GameManager가 수집 처리
             Debug.Log($"📩 편지 {letterCount + 1} 획득");
 
-            isUsed = true; // 재상호작용 방지 (동일 Letter)
-            Destroy(gameObject); // 실제 편지 오브젝트 제거
+            isUsed = true; // 재상호작용 방지
+            interactionUI?.SetActive(false);
+            Destroy(gameObject); // 편지 오브젝트 제거
         }
     }
+
 
     private void HandleCrowbarInteraction()
     {
@@ -89,6 +89,7 @@ public class InteractionManager : MonoBehaviour
         playerState.ObtainCrowbar();
         Debug.Log("🔧 Crowbar 획득");
         isUsed = true;
+        interactionUI?.SetActive(false);
         Destroy(gameObject);
     }
 

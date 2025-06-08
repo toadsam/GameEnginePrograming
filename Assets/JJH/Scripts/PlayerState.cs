@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class PlayerState : MonoBehaviour
 {
     [Header("상태 저장")]
-    private int letterCount = 0;
+   // private int letterCount = 0;
     private bool hasCrowbar = false;
     private bool hasKey = false;
 
@@ -23,15 +23,15 @@ public class PlayerState : MonoBehaviour
     }
 
     // 📩 Letter 획득
-    public void CollectLetter()
-    {
-        letterCount++;
-        Debug.Log($"📩 편지 {letterCount}개 획득");
-    }
+   // public void CollectLetter()
+   // {
+      //  letterCount++;
+     //   Debug.Log($"📩 편지 {letterCount}개 획득");
+  //  }
 
-    public int GetLetterCount() => letterCount;
+   // public int GetLetterCount() => letterCount;
 
-    public bool HiddenEndingCase() => letterCount >= 5;
+    public bool HiddenEndingCase() => GameManager.Instance.letterCount >= 5;
 
     // 🔧 Crowbar
     public void ObtainCrowbar()
