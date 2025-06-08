@@ -324,7 +324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 752561002829875511, guid: d6edcf5cfcd2926408a27068b783227b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.33
+      value: -32.89
       objectReference: {fileID: 0}
     - target: {fileID: 752561002829875511, guid: d6edcf5cfcd2926408a27068b783227b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -332,7 +332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 752561002829875511, guid: d6edcf5cfcd2926408a27068b783227b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 14.14
       objectReference: {fileID: 0}
     - target: {fileID: 752561002829875511, guid: d6edcf5cfcd2926408a27068b783227b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9642,6 +9642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackSound: {fileID: 8300000, guid: 4e7e68280d229e040a3316602b0a07a6, type: 3}
   soundDelay: 0.3
+  uiToToggle: {fileID: 0}
 --- !u!95 &375682497
 Animator:
   serializedVersion: 7
@@ -23842,7 +23843,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4913005085238046036, guid: 259d1de4507c3624c829968c95835990, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.81
+      value: -8.98
       objectReference: {fileID: 0}
     - target: {fileID: 4913005085238046036, guid: 259d1de4507c3624c829968c95835990, type: 3}
       propertyPath: m_LocalPosition.y
@@ -23850,7 +23851,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4913005085238046036, guid: 259d1de4507c3624c829968c95835990, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.27
+      value: -16.41
       objectReference: {fileID: 0}
     - target: {fileID: 4913005085238046036, guid: 259d1de4507c3624c829968c95835990, type: 3}
       propertyPath: m_LocalRotation.w
@@ -31113,7 +31114,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1000, y: 1000}
+  m_SizeDelta: {x: 2000, y: 2000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1211675191
 PrefabInstance:
@@ -37212,8 +37213,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bddd681e1deedf84691640b2cc9f9568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewAngle: 60
-  viewRange: 30
+  viewAngle: 50
+  viewRange: 15
   playerTransform: {fileID: 51201803}
   playerFlashlightObject: {fileID: 521688148}
   currentState: 0
@@ -38325,7 +38326,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.92
+      value: 45.01
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -38333,7 +38334,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 28.06
+      value: 21.63
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalRotation.w
