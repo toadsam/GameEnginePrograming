@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,7 +7,8 @@ public enum InteractableType
     Letter,
     Crowbar,
     Key,
-    EscapeDoor
+    EscapeDoor,
+    Door   
 }
 
 public class InteractionManager : MonoBehaviour
@@ -15,6 +17,16 @@ public class InteractionManager : MonoBehaviour
 
     [Header("공통 상호작용 UI")]
     public GameObject interactionUI;
+
+    [Header("문 관련")]
+    public GameObject doorToOpen;  // 문 오브젝트
+    private bool isDoorOpening = false;
+
+    [Header("문 열림 이후 처리")]
+    public GameObject doorOpenUI;             // 문이 열리면 보여줄 UI
+    public AudioClip doorOpenSound;           // 문 열릴 때 나는 소리
+    public GameObject objectToDisappear;      // 사라질 오브젝트
+    public float disappearDelay = 2f;         // 몇 초 뒤에 사라질지
 
     [Header("Letter 관련")]
     //public GameObject[] letterDetails; // detail1 ~ detail5
@@ -61,6 +73,9 @@ public class InteractionManager : MonoBehaviour
                 case InteractableType.EscapeDoor:
                     HandleEscapeInteraction();
                     break;
+                case InteractableType.Door:   
+                    HandleDoorInteraction();
+                    break;
             }
         }
     }
@@ -79,6 +94,66 @@ public class InteractionManager : MonoBehaviour
             Destroy(gameObject); // 편지 오브젝트 제거
         }
     }
+
+    private void HandleDoorInteraction()
+    {
+        if (doorToOpen != null && !isDoorOpening)
+        {
+            StartCoroutine(RotateDoorSmoothly(doorToOpen, -150f, 1f)); // 1초 동안 회전
+            Debug.Log("🚪 문 열리는 중...");
+            isUsed = true;
+            interactionUI?.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("⚠️ doorToOpen이 설정되지 않았거나 이미 열림.");
+        }
+    }
+
+    private IEnumerator RotateDoorSmoothly(GameObject door, float yAngle, float duration)
+    {
+        isDoorOpening = true;
+
+        Quaternion startRotation = door.transform.rotation;
+        Quaternion endRotation = startRotation * Quaternion.Euler(0, yAngle, 0);
+
+        float timeElapsed = 0f;
+
+        while (timeElapsed < duration)
+        {
+            door.transform.rotation = Quaternion.Slerp(startRotation, endRotation, timeElapsed / duration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        door.transform.rotation = endRotation;
+        Debug.Log("✅ 문 열림 완료");
+
+        // ✅ 추가: UI 표시
+        if (doorOpenUI != null)
+        {
+            yield return new WaitForSeconds(1);
+            doorOpenUI.SetActive(true);
+        }
+
+        // ✅ 추가: 소리 재생
+        if (doorOpenSound != null)
+        {
+            AudioSource.PlayClipAtPoint(doorOpenSound, door.transform.position);
+        }
+
+        // ✅ 추가: 특정 시간 뒤 오브젝트 삭제
+        if (objectToDisappear != null)
+        {
+            yield return new WaitForSeconds(disappearDelay);
+            objectToDisappear.SetActive(false);
+            doorOpenUI.SetActive(false);
+            Debug.Log("🧨 오브젝트 사라짐 완료");
+        }
+
+        isDoorOpening = false;
+    }
+
 
 
     private void HandleCrowbarInteraction()
