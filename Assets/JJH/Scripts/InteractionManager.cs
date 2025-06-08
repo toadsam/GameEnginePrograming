@@ -142,13 +142,19 @@ public class InteractionManager : MonoBehaviour
             AudioSource.PlayClipAtPoint(doorOpenSound, door.transform.position);
         }
 
-        // ✅ 추가: 특정 시간 뒤 오브젝트 삭제
         if (objectToDisappear != null)
         {
+            bool wasInitiallyActive = objectToDisappear.activeSelf; // 현재 상태 저장
+
             yield return new WaitForSeconds(disappearDelay);
-            objectToDisappear.SetActive(false);
-            doorOpenUI.SetActive(false);
-            Debug.Log("🧨 오브젝트 사라짐 완료");
+
+            objectToDisappear.SetActive(!wasInitiallyActive); // 반대로 설정
+            if (doorOpenUI != null)
+            {
+                doorOpenUI.SetActive(false);
+            }
+
+            Debug.Log($"🧨 오브젝트 {(wasInitiallyActive ? "비활성화" : "활성화")} 완료");
         }
 
         isDoorOpening = false;
