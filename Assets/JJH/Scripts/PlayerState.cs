@@ -1,10 +1,11 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerState : MonoBehaviour
 {
     [Header("상태 저장")]
-    private int letterCount = 0;
+   // private int letterCount = 0;
     private bool hasCrowbar = false;
     private bool hasKey = false;
 
@@ -22,15 +23,15 @@ public class PlayerState : MonoBehaviour
     }
 
     // 📩 Letter 획득
-    public void CollectLetter()
-    {
-        letterCount++;
-        Debug.Log($"📩 편지 {letterCount}개 획득");
-    }
+   // public void CollectLetter()
+   // {
+      //  letterCount++;
+     //   Debug.Log($"📩 편지 {letterCount}개 획득");
+  //  }
 
-    public int GetLetterCount() => letterCount;
+   // public int GetLetterCount() => letterCount;
 
-    public bool HiddenEndingCase() => letterCount >= 5;
+    public bool HiddenEndingCase() => GameManager.Instance.letterCount >= 5;
 
     // 🔧 Crowbar
     public void ObtainCrowbar()
@@ -81,12 +82,19 @@ private void CheckOneEnemy(GameObject enemy)
     if (ai != null && ai.IsChasingPlayer()) // ✅ 상태 체크 메서드로 교체
     {
         float dist = Vector3.Distance(transform.position, ai.transform.position);
-        if (dist <= 1f)
+        if (dist <= 5f)
         {
             Debug.Log("☠️ 적에게 잡힘 - DeadEnding");
-            GameManager.Instance.SetPhase(GamePhase.GameOver);
-            GameSceneManager.LoadDeadEndingScene();
-        }
+                StartCoroutine(TriggerGameOverAfterDelay());
+            }
     }
 }
+
+
+    private IEnumerator TriggerGameOverAfterDelay()
+    {
+        yield return new WaitForSeconds(3f); // 3초 대기
+        GameManager.Instance.SetPhase(GamePhase.GameOver);
+        GameSceneManager.Instance.LoadDeadEndingScene();
+    }
 }

@@ -6,12 +6,18 @@ public enum GamePhase
     Ingame,
     GameOver
 }
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
     [Header("게임 상태")]
     public GamePhase CurrentPhase { get; private set; } = GamePhase.Title;
+
+    [Header("편지 UI 배열")]
+    public GameObject[] letterDetails;
+
+    public int letterCount = 0;
 
     private void Awake()
     {
@@ -32,4 +38,19 @@ public class GameManager : MonoBehaviour
         CurrentPhase = phase;
         Debug.Log($"🔄 게임 상태 변경: {phase}");
     }
+
+    // 📩 편지 수집 처리
+    public void CollectLetter()
+    {
+        if (letterCount < letterDetails.Length)
+        {
+            letterDetails[letterCount].SetActive(true);
+            letterCount++;
+            Debug.Log($"📩 편지 {letterCount}개 획득");
+        }
+    }
+
+    public int GetLetterCount() => letterCount;
+
+    public bool HasAllLetters() => letterCount >= letterDetails.Length;
 }

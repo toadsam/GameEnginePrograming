@@ -1,39 +1,56 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public static class GameSceneManager
+public  class GameSceneManager : MonoBehaviour
 {
-    public static void LoadScene(string sceneName)
+
+    public static GameSceneManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        // 싱글톤 설정
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject); // 씬 전환 시 유지
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    public void LoadScene(string sceneName)
     {
         Debug.Log($"📥 씬 전환: {sceneName}");
         SceneManager.LoadScene(sceneName);
     }
 
-    public static void LoadEscapeScene()
+    public void LoadEscapeScene()
     {
         GameManager.Instance.SetPhase(GamePhase.GameOver);
         LoadScene("EscapeScene");
     }
 
-    public static void LoadDeadEndingScene()
+    public  void LoadDeadEndingScene()
     {
         GameManager.Instance.SetPhase(GamePhase.GameOver);
         LoadScene("DeadEndingScene");
+        Debug.Log("안녕");
     }
 
-    public static void LoadHiddenEndingScene()
+    public  void LoadHiddenEndingScene()
     {
         GameManager.Instance.SetPhase(GamePhase.GameOver);
         LoadScene("HiddenEndingScene");
     }
 
-    public static void LoadTitleScene()
+    public  void LoadTitleScene()
     {
         GameManager.Instance.SetPhase(GamePhase.Title);
         LoadScene("TitleScene");
     }
 
-    public static void LoadMainGameScene()
+    public void LoadMainGameScene()
     {
         GameManager.Instance.SetPhase(GamePhase.Ingame);
         LoadScene("MainGameScene");
