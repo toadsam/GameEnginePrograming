@@ -8,6 +8,7 @@ public class EnemyManager : MonoBehaviour
     [Header("���� ��ġ�� ���� ���۷���")]
     public MonsterAI dollMonster;
     public MonsterAI bookheadMonster;
+    public MonsterAI zombie;
 
     void Awake()
     {
@@ -32,6 +33,9 @@ public class EnemyManager : MonoBehaviour
 
         if (bookheadMonster != null)
             bookheadMonster.DisableChaseAndAttack();
+
+        if (zombie != null)
+            zombie.DisableChaseAndAttack();
     }
 
     // UI ��ư�̳� �̺�Ʈ���� ȣ���� �� �ֵ��� ���� �޼���
@@ -45,5 +49,10 @@ public class EnemyManager : MonoBehaviour
     {
         if (bookheadMonster != null)
             bookheadMonster.SetChaseAndAttackEnabled(on);
+    }
+    public void ToggleZombieBehavior(bool on)
+    {
+        if (zombie != null)
+            zombie.SetChaseAndAttackEnabled(on);
     }
 }

@@ -7,7 +7,8 @@ public class MonsterAI : MonoBehaviour
     public enum MonsterType
     {
         Doll,
-        BookheadMonster
+        BookheadMonster,
+        Zombie
     }
 
     [Header("몬스터 타입 설정")]
@@ -16,14 +17,15 @@ public class MonsterAI : MonoBehaviour
     [Header("각 타입별 추적/공격 허용 여부")]
     public bool dollCanChaseAndAttack = false;
     public bool bookheadCanChaseAndAttack = true;
+    public bool zombieCanChaseAndAttack = true;
 
     [Header("공통 설정")]
     public Transform player;
-    public float chaseDistance = 8f;       // 추적 시작 거리
-    public float attackDistance = 2f;      // 공격 범위
-    public float wanderRadius = 10f;       // 순찰 반경
-    public float wanderTimer = 5f;         // 순찰 간격
-    public float attackDuration = 1.2f;    // 공격 애니메이션 지속 시간
+    public float chaseDistance = 8f;
+    public float attackDistance = 2f;
+    public float wanderRadius = 10f;
+    public float wanderTimer = 5f;
+    public float attackDuration = 1.2f;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -31,10 +33,10 @@ public class MonsterAI : MonoBehaviour
     private bool isAttacking = false;
 
     [Header("공격 시 UI")]
-    public GameObject scareUI;             // 깜짝 UI 오브젝트
-    public float scareUIDistance = 1.5f;   // 이 거리 안으로 들어오면 UI 표시
-    public AudioClip scareSound;           // UI 깜짝 연출 사운드
-    private bool uiTriggered = false;      // 중복 표시 방지
+    public GameObject scareUI;
+    public float scareUIDistance = 1.5f;
+    public AudioClip scareSound;
+    private bool uiTriggered = false;
 
     [Header("추적 시작 시 사운드")]
     public AudioClip chaseSound;
@@ -52,18 +54,19 @@ public class MonsterAI : MonoBehaviour
             audioSource = gameObject.AddComponent<AudioSource>();
 
         if (scareUI != null)
-            scareUI.SetActive(false); // 초기 비활성화
+            scareUI.SetActive(false);
     }
 
     void Update()
     {
         bool isEnabled = (monsterType == MonsterType.Doll)
-                            ? dollCanChaseAndAttack
-                            : bookheadCanChaseAndAttack;
+            ? dollCanChaseAndAttack
+            : (monsterType == MonsterType.BookheadMonster)
+                ? bookheadCanChaseAndAttack
+                : zombieCanChaseAndAttack; // ✅ Zombie 추가
 
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
-        // 공격
         if (isEnabled && distanceToPlayer <= attackDistance && !isAttacking)
         {
             agent.SetDestination(transform.position);
@@ -71,21 +74,18 @@ public class MonsterAI : MonoBehaviour
             SetAnimation(false, true);
             StartCoroutine(EndAttackAfter(attackDuration));
         }
-        // 추적
         else if (isEnabled && distanceToPlayer <= chaseDistance && !isAttacking)
         {
             agent.SetDestination(player.position);
             animator.speed = 3f;
             SetAnimation(true, false);
 
-            // 추적 시작 시 사운드 재생
             if (!hasPlayedChaseSound && chaseSound != null)
             {
                 audioSource.PlayOneShot(chaseSound);
                 hasPlayedChaseSound = true;
             }
         }
-        // 순찰
         else
         {
             if (!isAttacking)
@@ -103,10 +103,10 @@ public class MonsterAI : MonoBehaviour
                 SetAnimation(isMoving, false);
             }
 
-            hasPlayedChaseSound = false; // 추적 종료 시 리셋
+            hasPlayedChaseSound = false;
         }
 
-        // 📣 UI 깜짝 연출
+        // 😱 Scare UI 표시
         if (!uiTriggered && isEnabled && distanceToPlayer <= scareUIDistance && distanceToPlayer <= attackDistance)
         {
             if (scareUI != null)
@@ -115,11 +115,10 @@ public class MonsterAI : MonoBehaviour
                 scareUI.SetActive(true);
                 uiTriggered = true;
 
-                // 📢 깜짝 사운드 재생
                 if (scareSound != null)
                     audioSource.PlayOneShot(scareSound);
 
-                Invoke("HideScareUI", 1.5f); // 자동 숨김
+                Invoke("HideScareUI", 1.5f);
             }
         }
     }
@@ -150,29 +149,32 @@ public class MonsterAI : MonoBehaviour
 
     public void SetChaseAndAttackEnabled(bool enabled)
     {
-        if (monsterType == MonsterType.Doll)
-            dollCanChaseAndAttack = enabled;
-        else if (monsterType == MonsterType.BookheadMonster)
-            bookheadCanChaseAndAttack = enabled;
+        switch (monsterType)
+        {
+            case MonsterType.Doll:
+                dollCanChaseAndAttack = enabled;
+                break;
+            case MonsterType.BookheadMonster:
+                bookheadCanChaseAndAttack = enabled;
+                break;
+            case MonsterType.Zombie:
+                zombieCanChaseAndAttack = enabled;
+                break;
+        }
     }
 
-    public void EnableChaseAndAttack()
-    {
-        SetChaseAndAttackEnabled(true);
-    }
-
-    public void DisableChaseAndAttack()
-    {
-        SetChaseAndAttackEnabled(false);
-    }
+    public void EnableChaseAndAttack() => SetChaseAndAttackEnabled(true);
+    public void DisableChaseAndAttack() => SetChaseAndAttackEnabled(false);
 
     public bool IsChasingPlayer()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         bool isEnabled = (monsterType == MonsterType.Doll)
-                            ? dollCanChaseAndAttack
-                            : bookheadCanChaseAndAttack;
+            ? dollCanChaseAndAttack
+            : (monsterType == MonsterType.BookheadMonster)
+                ? bookheadCanChaseAndAttack
+                : zombieCanChaseAndAttack;
 
         return isEnabled && distanceToPlayer <= chaseDistance && distanceToPlayer > attackDistance;
     }
