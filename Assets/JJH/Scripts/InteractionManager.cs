@@ -182,6 +182,7 @@ public class InteractionManager : MonoBehaviour
         playerState.ObtainKey();
         Debug.Log("🗝️ 열쇠 획득");
         isUsed = true;
+        interactionUI?.SetActive(false);
         Destroy(gameObject);
     }
 
@@ -191,6 +192,7 @@ public class InteractionManager : MonoBehaviour
         {
             Debug.Log("🔓 탈출 시도: 열쇠 있음");
             PlaySound(unlockSound);
+            interactionUI?.SetActive(false);
             playerState.CheckEscapeTrigger(); // 탈출 시도
         }
         else
@@ -199,6 +201,7 @@ public class InteractionManager : MonoBehaviour
             PlaySound(lockSound);
             if (dontEscapeUI != null)
                 dontEscapeUI.SetActive(true);
+            interactionUI?.SetActive(false);
         }
     }
 
