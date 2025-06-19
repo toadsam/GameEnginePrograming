@@ -7,4 +7,8 @@ public class StartGameButton : MonoBehaviour
     {
         SceneManager.LoadScene("JJH3");
     }
+    public void LoadTitle()
+    {
+        SceneManager.LoadScene("StartScene");
+    }
 }
