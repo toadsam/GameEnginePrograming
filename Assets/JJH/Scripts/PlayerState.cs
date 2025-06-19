@@ -93,7 +93,7 @@ private void CheckOneEnemy(GameObject enemy)
 
     private IEnumerator TriggerGameOverAfterDelay()
     {
-        yield return new WaitForSeconds(3f); // 3초 대기
+        yield return new WaitForSeconds(2f); // 3초 대기
         GameManager.Instance.SetPhase(GamePhase.GameOver);
         GameSceneManager.Instance.LoadDeadEndingScene();
     }

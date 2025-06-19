@@ -38,7 +38,7 @@ public class DisappearOnWeaponHit : MonoBehaviour
             if (targetAnimator != null)
                 targetAnimator.SetBool("isDie", true);  // ✅ Bool로 애니메이션 전이 트리거
 
-            StartCoroutine(RemoveAfterDelay(3f));
+            StartCoroutine(RemoveAfterDelay(2f));
         }
     }
 
