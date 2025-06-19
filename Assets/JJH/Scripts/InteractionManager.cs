@@ -193,7 +193,21 @@ public class InteractionManager : MonoBehaviour
             Debug.Log("🔓 탈출 시도: 열쇠 있음");
             PlaySound(unlockSound);
             interactionUI?.SetActive(false);
-            playerState.CheckEscapeTrigger(); // 탈출 시도
+
+            // ✅ 몬스터 3마리 모두 죽었으면 히든 엔딩 트리거
+            bool allMonstersDead = GameManager.Instance.IsDemonDollDead()
+                && GameManager.Instance.IsBookHeadDead()
+                && GameManager.Instance.IsZombieDead();
+
+            if (allMonstersDead)
+            {
+                Debug.Log("✅ 열쇠 + 모든 몬스터 사망 → 히든 엔딩 진입");
+                playerState.CheckHiddenEndingTrigger();
+            }
+            else
+            {
+                playerState.CheckEscapeTrigger(); // 일반 탈출 처리
+            }
         }
         else
         {
