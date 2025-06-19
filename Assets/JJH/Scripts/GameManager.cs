@@ -9,6 +9,12 @@ public enum GamePhase
 
 public class GameManager : MonoBehaviour
 {
+
+    [Header("몬스터 사망 여부")]
+    public bool isDemonDollDead = false;
+    public bool isBookHeadDead = false;
+    public bool isZombieDead = false;
+
     public static GameManager Instance { get; private set; }
 
     [Header("게임 상태")]
@@ -53,4 +59,15 @@ public class GameManager : MonoBehaviour
     public int GetLetterCount() => letterCount;
 
     public bool HasAllLetters() => letterCount >= letterDetails.Length;
+
+
+    // ✅ 몬스터 사망 상태 설정 함수들
+    public void SetDemonDollDead(bool dead) => isDemonDollDead = dead;
+    public void SetBookHeadDead(bool dead) => isBookHeadDead = dead;
+    public void SetZombieDead(bool dead) => isZombieDead = dead;
+
+    // ✅ 몬스터 생존 여부 조회 함수들
+    public bool IsDemonDollDead() => isDemonDollDead;
+    public bool IsBookHeadDead() => isBookHeadDead;
+    public bool IsZombieDead() => isZombieDead;
 }

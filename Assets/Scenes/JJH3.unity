@@ -25315,7 +25315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4913005085238046036, guid: 259d1de4507c3624c829968c95835990, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.98
+      value: 19.82
       objectReference: {fileID: 0}
     - target: {fileID: 4913005085238046036, guid: 259d1de4507c3624c829968c95835990, type: 3}
       propertyPath: m_LocalPosition.y
@@ -25323,7 +25323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4913005085238046036, guid: 259d1de4507c3624c829968c95835990, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16.41
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 4913005085238046036, guid: 259d1de4507c3624c829968c95835990, type: 3}
       propertyPath: m_LocalRotation.w
@@ -30709,6 +30709,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9048ff4bba266ca4fb593b2aa2d824d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterType: 0
   targetObject: {fileID: 1111244834}
   weaponTag: Weapon
   hitSound: {fileID: 8300000, guid: dffcc5642e211d14ea2c1a7a2a04b983, type: 3}
@@ -38748,6 +38749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9048ff4bba266ca4fb593b2aa2d824d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterType: 0
   targetObject: {fileID: 1386025515}
   weaponTag: Weapon
   hitSound: {fileID: 8300000, guid: dffcc5642e211d14ea2c1a7a2a04b983, type: 3}
@@ -40291,6 +40293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9048ff4bba266ca4fb593b2aa2d824d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monsterType: 0
   targetObject: {fileID: 1449352641}
   weaponTag: Weapon
   hitSound: {fileID: 8300000, guid: dffcc5642e211d14ea2c1a7a2a04b983, type: 3}
@@ -41156,6 +41159,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f64e7496e156dfe4d92ec3a94463db9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDemonDollDead: 0
+  isBookHeadDead: 0
+  isZombieDead: 0
   letterDetails:
   - {fileID: 202236216}
   - {fileID: 2029491712}
@@ -41472,7 +41478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 35.3
+      value: -2.44
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -41480,7 +41486,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 45.36
+      value: 29.27
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -52627,7 +52633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3705028537381535112, guid: 78df1db2fbc8ec64f949fac0c05bf693, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.553
+      value: -9.39
       objectReference: {fileID: 0}
     - target: {fileID: 3705028537381535112, guid: 78df1db2fbc8ec64f949fac0c05bf693, type: 3}
       propertyPath: m_LocalPosition.y
@@ -52635,7 +52641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3705028537381535112, guid: 78df1db2fbc8ec64f949fac0c05bf693, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 13.903
+      value: 28.97
       objectReference: {fileID: 0}
     - target: {fileID: 3705028537381535112, guid: 78df1db2fbc8ec64f949fac0c05bf693, type: 3}
       propertyPath: m_LocalRotation.w

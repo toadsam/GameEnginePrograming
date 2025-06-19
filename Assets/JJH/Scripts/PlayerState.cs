@@ -18,7 +18,7 @@ public class PlayerState : MonoBehaviour
 
     void Update()
     {
-        CheckHiddenEndingTrigger();
+        //CheckHiddenEndingTrigger();
         CheckDeadEndingTrigger();
     }
 
@@ -57,14 +57,11 @@ public class PlayerState : MonoBehaviour
     }
 
     // ✅ 히든엔딩 조건 확인: Update에서 체크
-    private void CheckHiddenEndingTrigger()
+    public void CheckHiddenEndingTrigger()
     {
-        if (HiddenEndingCase() && enemyA == null && enemyB == null)
-        {
-            Debug.Log("🎉 히든 엔딩 조건 만족");
-            GameManager.Instance.SetPhase(GamePhase.GameOver);
-            SceneManager.LoadScene("HiddenEndingScene");
-        }
+
+       SceneManager.LoadScene("HiddenEndingScene");
+        
     }
 
     // ☠️ 적에게 잡힘
