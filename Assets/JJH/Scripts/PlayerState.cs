@@ -12,6 +12,7 @@ public class PlayerState : MonoBehaviour
 
     [Header("Escape UI")]
     public GameObject escapeUI;
+    private bool isGameOverTriggered = false;
 
     [Header("Enemy 참조")]
     public GameObject enemyA;
@@ -63,7 +64,6 @@ public class PlayerState : MonoBehaviour
     // ✅ 히든엔딩 조건 확인: Update에서 체크
     public void CheckHiddenEndingTrigger()
     {
-
         SceneManager.LoadScene("HiddenEndingScene");
         GameManager.Instance.SetPhase(GamePhase.GameOver);
         GameManager.Instance.UnlockCursor();
@@ -79,16 +79,18 @@ public class PlayerState : MonoBehaviour
 
 private void CheckOneEnemy(GameObject enemy)
 {
-    if (enemy == null) return;
+    if (enemy == null || isGameOverTriggered) return;
 
     var ai = enemy.GetComponent<MonsterAI>();
     if (ai != null && ai.IsChasingPlayer()) // ✅ 상태 체크 메서드로 교체
     {
         float dist = Vector3.Distance(transform.position, ai.transform.position);
-        if (dist <= 5f)
+        if (dist <= 2.5f)
         {
             Debug.Log("☠️ 적에게 잡힘 - " + enemy);
-                StartCoroutine(TriggerGameOverAfterDelay());
+            isGameOverTriggered = true;
+            ai.ShowScareUI();
+            StartCoroutine(TriggerGameOverAfterDelay());
             }
     }
 }

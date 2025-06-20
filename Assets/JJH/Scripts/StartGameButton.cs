@@ -5,6 +5,7 @@ public class StartGameButton : MonoBehaviour
 {
     public void LoadJJH3Scene()
     {
+        GameManager.Instance.SetPhase(GamePhase.Ingame);
         SceneManager.LoadScene("JJH3");
     }
     public void LoadTitle()

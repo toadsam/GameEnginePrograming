@@ -548,6 +548,7 @@ GameObject:
   - component: {fileID: 649030477}
   - component: {fileID: 649030476}
   - component: {fileID: 649030479}
+  - component: {fileID: 649030480}
   m_Layer: 5
   m_Name: game_start_button
   m_TagString: Untagged
@@ -631,7 +632,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1151366290}
+      - m_Target: {fileID: 649030480}
         m_TargetAssemblyTypeName: StartGameButton, Assembly-CSharp
         m_MethodName: LoadJJH3Scene
         m_Mode: 1
@@ -698,6 +699,18 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls: []
+--- !u!114 &649030480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 649030474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5c1bf1a9c18b27478baf6b9657d0ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &785145399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,7 +1143,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1151366291}
-  - component: {fileID: 1151366290}
+  - component: {fileID: 1151366292}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1138,18 +1151,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1151366290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1151366289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5c1bf1a9c18b27478baf6b9657d0ea5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1151366291
 Transform:
   m_ObjectHideFlags: 0
@@ -1165,6 +1166,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1151366292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151366289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f64e7496e156dfe4d92ec3a94463db9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDemonDollDead: 0
+  isBookHeadDead: 0
+  isZombieDead: 0
+  letterDetails: []
+  letterCount: 0
 --- !u!1 &1219247700
 GameObject:
   m_ObjectHideFlags: 0
@@ -1865,7 +1883,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1874279536}
-  - component: {fileID: 1874279535}
   m_Layer: 0
   m_Name: GameSceneManager
   m_TagString: Untagged
@@ -1873,18 +1890,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1874279535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1874279534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed7b27957762abf48bf1c567c7fb4d5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1874279536
 Transform:
   m_ObjectHideFlags: 0

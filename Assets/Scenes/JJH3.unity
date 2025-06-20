@@ -27114,6 +27114,8 @@ RectTransform:
   - {fileID: 2022842938}
   - {fileID: 1143397749}
   - {fileID: 1857878761}
+  - {fileID: 391471187}
+  - {fileID: 769520341}
   m_Father: {fileID: 1415015872}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -30967,7 +30969,7 @@ MonoBehaviour:
   wanderTimer: 5
   attackDuration: 1.2
   scareUI: {fileID: 1207667420}
-  scareUIDistance: 1.5
+  scareUIDistance: 2
   scareSound: {fileID: 8300000, guid: d2db4c06b609f8745a1099450eba3396, type: 3}
   chaseSound: {fileID: 8300000, guid: e27b53131d4789b4d8a15b98ae2507a9, type: 3}
 --- !u!136 &1111244841
@@ -39097,17 +39099,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterType: 1
-  dollCanChaseAndAttack: 1
+  dollCanChaseAndAttack: 0
   bookheadCanChaseAndAttack: 1
-  zombieCanChaseAndAttack: 1
+  zombieCanChaseAndAttack: 0
   player: {fileID: 51201803}
   chaseDistance: 20
   attackDistance: 2
   wanderRadius: 10
   wanderTimer: 5
   attackDuration: 1.2
-  scareUI: {fileID: 1207667420}
-  scareUIDistance: 1.5
+  scareUI: {fileID: 947444966}
+  scareUIDistance: 2
   scareSound: {fileID: 8300000, guid: 66fc7dff77c95b043b767827ed10dacf, type: 3}
   chaseSound: {fileID: 8300000, guid: e27b53131d4789b4d8a15b98ae2507a9, type: 3}
 --- !u!95 &1386025519

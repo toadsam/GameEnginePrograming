@@ -105,23 +105,20 @@ public class MonsterAI : MonoBehaviour
 
             hasPlayedChaseSound = false;
         }
-
-        // 😱 Scare UI 표시
-        if (!uiTriggered && isEnabled && distanceToPlayer <= scareUIDistance && distanceToPlayer <= attackDistance)
-        {
-            if (scareUI != null)
-            {
-                Debug.Log("✅ 깜짝 UI 표시");
-                scareUI.SetActive(true);
-                uiTriggered = true;
-
-                if (scareSound != null)
-                    audioSource.PlayOneShot(scareSound, 0.3f);
-
-                Invoke("HideScareUI", 1.5f);
-            }
-        }
+        
     }
+public void ShowScareUI()
+{
+    if (uiTriggered || scareUI == null) return;
+
+    scareUI.SetActive(true);
+    uiTriggered = true;
+
+    if (scareSound != null)
+        audioSource.PlayOneShot(scareSound, 0.3f);
+
+    Invoke(nameof(HideScareUI), 1.5f);
+}
 
     void SetAnimation(bool isWalking, bool isAttacking)
     {
