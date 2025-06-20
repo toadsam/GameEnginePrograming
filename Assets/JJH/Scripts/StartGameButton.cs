@@ -10,6 +10,8 @@ public class StartGameButton : MonoBehaviour
     public void LoadTitle()
     {
         ResetGameState(); ;
+        Debug.Log("restart ë²„íŠ¼ ëˆŒë¦¼");
+        GameManager.Instance.SetPhase(GamePhase.Title);
         SceneManager.LoadScene("StartScene");
     }
 
@@ -20,14 +22,14 @@ public class StartGameButton : MonoBehaviour
           //  GameManager.Instance.SetPhase(GamePhase.Title);
             GameManager.Instance.letterCount = 0;
 
-            // ¸ó½ºÅÍ »óÅÂ ÃÊ±âÈ­
+            // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
             GameManager.Instance.SetDemonDollDead(false);
             GameManager.Instance.SetBookHeadDead(false);
             GameManager.Instance.SetZombieDead(false);
             FullReset();
         }
 
-        // ´Ù¸¥ ¸Å´ÏÀúµé ÃÊ±âÈ­ (¿¹: ÀÎº¥Åä¸®, Á¡¼ö µî)
+        // ï¿½Ù¸ï¿½ ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ (ï¿½ï¿½: ï¿½Îºï¿½ï¿½ä¸®, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)
         // InventoryManager.Instance?.Reset();
         // ScoreManager.Instance?.Reset();
     }
@@ -37,7 +39,7 @@ public class StartGameButton : MonoBehaviour
         Destroy(GameManager.Instance.gameObject);
         Destroy(GameSceneManager.Instance.gameObject); 
             Destroy(EnemyManager.Instance.gameObject);
-        // ´Ù¸¥ ½Ì±ÛÅæµµ ¸¶Âù°¡Áö·Î Destroy
+        // ï¿½Ù¸ï¿½ ï¿½Ì±ï¿½ï¿½æµµ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Destroy
 
        // Cursor.lockState = CursorLockMode.None;
       //  Cursor.visible = true;

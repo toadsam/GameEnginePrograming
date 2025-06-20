@@ -24,8 +24,7 @@ public  class GameSceneManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "JJH3")
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            GameManager.Instance.LockCursor();
         }
     }
     public void LoadScene(string sceneName)
@@ -58,7 +57,7 @@ public  class GameSceneManager : MonoBehaviour
     public  void LoadTitleScene()
     {
         GameManager.Instance.SetPhase(GamePhase.Title);
-        LoadScene("TitleScene");
+        LoadScene("StartScene");
     }
 
     public void LoadMainGameScene()

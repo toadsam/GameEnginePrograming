@@ -17,7 +17,7 @@ public class MonsterAI : MonoBehaviour
     [Header("각 타입별 추적/공격 허용 여부")]
     public bool dollCanChaseAndAttack = false;
     public bool bookheadCanChaseAndAttack = true;
-    public bool zombieCanChaseAndAttack = true;
+    public bool zombieCanChaseAndAttack = false;
 
     [Header("공통 설정")]
     public Transform player;

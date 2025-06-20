@@ -13,7 +13,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Start()
     {
-        LockCursor();
+        GameManager.Instance.LockCursor();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
     }
@@ -27,9 +27,9 @@ public class PlayerAttack : MonoBehaviour
             uiToToggle.SetActive(!isActive);
 
             if (isActive)
-                LockCursor();   // UI 꺼짐 → 커서 잠금
+                GameManager.Instance.LockCursor();   // UI 꺼짐 → 커서 잠금
             else
-                UnlockCursor(); // UI 켜짐 → 커서 표시
+                GameManager.Instance.UnlockCursor(); // UI 켜짐 → 커서 표시
         }
 
         // UI 켜져있으면 공격 안 함
@@ -48,17 +48,5 @@ public class PlayerAttack : MonoBehaviour
         yield return new WaitForSeconds(delay);
         if (attackSound != null)
             audioSource.PlayOneShot(attackSound);
-    }
-
-    private void LockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    private void UnlockCursor()
-    {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
     }
 }

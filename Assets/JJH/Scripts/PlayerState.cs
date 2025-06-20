@@ -8,6 +8,7 @@ public class PlayerState : MonoBehaviour
    // private int letterCount = 0;
     private bool hasCrowbar = false;
     private bool hasKey = false;
+    private AudioListener AudioListener;
 
     [Header("Escape UI")]
     public GameObject escapeUI;
@@ -15,21 +16,23 @@ public class PlayerState : MonoBehaviour
     [Header("Enemy 참조")]
     public GameObject enemyA;
     public GameObject enemyB;
+    public GameObject enemyC;
 
     void Update()
     {
         //CheckHiddenEndingTrigger();
         CheckDeadEndingTrigger();
     }
+    
 
     // 📩 Letter 획득
-   // public void CollectLetter()
-   // {
-      //  letterCount++;
-     //   Debug.Log($"📩 편지 {letterCount}개 획득");
-  //  }
+    // public void CollectLetter()
+    // {
+    //  letterCount++;
+    //   Debug.Log($"📩 편지 {letterCount}개 획득");
+    //  }
 
-   // public int GetLetterCount() => letterCount;
+    // public int GetLetterCount() => letterCount;
 
     public bool HiddenEndingCase() => GameManager.Instance.letterCount >= 5;
 
@@ -54,14 +57,16 @@ public class PlayerState : MonoBehaviour
     {
         GameManager.Instance.SetPhase(GamePhase.GameOver);
         SceneManager.LoadScene("EscapeScene");
+        GameManager.Instance.UnlockCursor();
     }
 
     // ✅ 히든엔딩 조건 확인: Update에서 체크
     public void CheckHiddenEndingTrigger()
     {
 
-       SceneManager.LoadScene("HiddenEndingScene");
-        
+        SceneManager.LoadScene("HiddenEndingScene");
+        GameManager.Instance.SetPhase(GamePhase.GameOver);
+        GameManager.Instance.UnlockCursor();
     }
 
     // ☠️ 적에게 잡힘
@@ -69,6 +74,7 @@ public class PlayerState : MonoBehaviour
     {
         CheckOneEnemy(enemyA);
         CheckOneEnemy(enemyB);
+        CheckOneEnemy(enemyC);
     }
 
 private void CheckOneEnemy(GameObject enemy)
@@ -81,7 +87,7 @@ private void CheckOneEnemy(GameObject enemy)
         float dist = Vector3.Distance(transform.position, ai.transform.position);
         if (dist <= 5f)
         {
-            Debug.Log("☠️ 적에게 잡힘 - DeadEnding");
+            Debug.Log("☠️ 적에게 잡힘 - " + enemy);
                 StartCoroutine(TriggerGameOverAfterDelay());
             }
     }
@@ -93,5 +99,6 @@ private void CheckOneEnemy(GameObject enemy)
         yield return new WaitForSeconds(2f); // 3초 대기
         GameManager.Instance.SetPhase(GamePhase.GameOver);
         GameSceneManager.Instance.LoadDeadEndingScene();
+        GameManager.Instance.UnlockCursor();
     }
 }

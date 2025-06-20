@@ -29,7 +29,7 @@ public class InteractionManager : MonoBehaviour
     public float disappearDelay = 2f;         // 몇 초 뒤에 사라질지
 
     [Header("Letter 관련")]
-    //public GameObject[] letterDetails; // detail1 ~ detail5
+    public GameObject[] letterDetails; // detail1 ~ detail5
 
     [Header("아이템 UI")]
     public GameObject crowbarUI;
