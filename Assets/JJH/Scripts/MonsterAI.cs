@@ -82,7 +82,7 @@ public class MonsterAI : MonoBehaviour
 
             if (!hasPlayedChaseSound && chaseSound != null)
             {
-                audioSource.PlayOneShot(chaseSound);
+                audioSource.PlayOneShot(chaseSound, 0.5f);
                 hasPlayedChaseSound = true;
             }
         }
@@ -116,7 +116,7 @@ public class MonsterAI : MonoBehaviour
                 uiTriggered = true;
 
                 if (scareSound != null)
-                    audioSource.PlayOneShot(scareSound);
+                    audioSource.PlayOneShot(scareSound, 0.3f);
 
                 Invoke("HideScareUI", 1.5f);
             }

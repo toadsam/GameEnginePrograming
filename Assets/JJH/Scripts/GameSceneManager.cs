@@ -19,8 +19,19 @@ public  class GameSceneManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "JJH3")
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+    }
     public void LoadScene(string sceneName)
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Debug.Log($"📥 씬 전환: {sceneName}");
         SceneManager.LoadScene(sceneName);
     }
