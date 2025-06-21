@@ -21,7 +21,6 @@ public class StartGameButton : MonoBehaviour
         if (GameManager.Instance != null)
         {
           //  GameManager.Instance.SetPhase(GamePhase.Title);
-            GameManager.Instance.letterCount = 0;
 
             // ���� ���� �ʱ�ȭ
             GameManager.Instance.SetDemonDollDead(false);

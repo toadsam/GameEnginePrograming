@@ -20,10 +20,7 @@ public class GameManager : MonoBehaviour
     [Header("게임 상태")]
     public GamePhase CurrentPhase { get; private set; } = GamePhase.Title;
 
-    [Header("편지 UI 배열")]
-    public GameObject[] letterDetails;
 
-    public int letterCount = 0;
 
     private void Awake()
     {
@@ -45,17 +42,6 @@ public class GameManager : MonoBehaviour
         Debug.Log($"🔄 게임 상태 변경: {phase}");
     }
 
-    // 📩 편지 수집 처리
-    public void CollectLetter()
-    {
-        if (letterCount < letterDetails.Length)
-        {
-            letterDetails[letterCount].SetActive(true);
-            letterCount++;
-            Debug.Log($"📩 편지 {letterCount}개 획득");
-        }
-    }
-
     public void LockCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -67,10 +53,6 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
-
-    public int GetLetterCount() => letterCount;
-
-    public bool HasAllLetters() => letterCount >= letterDetails.Length;
 
 
     // ✅ 몬스터 사망 상태 설정 함수들

@@ -30,6 +30,7 @@ public class InteractionManager : MonoBehaviour
 
     [Header("Letter 관련")]
     public GameObject[] letterDetails; // detail1 ~ detail5
+    public static int letterCount;
 
     [Header("아이템 UI")]
     public GameObject crowbarUI;
@@ -48,12 +49,19 @@ public class InteractionManager : MonoBehaviour
     {
         interactionUI?.SetActive(false);
         playerState = GameObject.FindWithTag("Player")?.GetComponent<PlayerState>();
+
+        
+        // 💡 편지 타입일 때만 디버그 출력
+        if (interactableType == InteractableType.Letter)
+            Debug.Log($"[{name}] 편지 배열 개수: {letterDetails.Length}");
     }
 
     private void Update()
     {
-        if (!isPlayerNear || isUsed) return;
-
+        if (!isPlayerNear || isUsed == true)
+        {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.Space))
         {
             switch (interactableType)
@@ -73,27 +81,27 @@ public class InteractionManager : MonoBehaviour
                 case InteractableType.EscapeDoor:
                     HandleEscapeInteraction();
                     break;
-                case InteractableType.Door:   
+                case InteractableType.Door:
                     HandleDoorInteraction();
                     break;
             }
         }
     }
-
     private void HandleLetterInteraction()
     {
-        int letterCount = GameManager.Instance.GetLetterCount();
-
-        if (letterCount < GameManager.Instance.letterDetails.Length)
+        if (letterCount < letterDetails.Length)
         {
-            GameManager.Instance.CollectLetter(); // GameManager가 수집 처리
             Debug.Log($"📩 편지 {letterCount + 1} 획득");
+            letterDetails[letterCount].SetActive(true);
+            letterCount++;
 
-            isUsed = true; // 재상호작용 방지
+            isUsed = true;
             interactionUI?.SetActive(false);
-            Destroy(gameObject); // 편지 오브젝트 제거
+            Destroy(gameObject);
         }
     }
+
+    public bool HasAllLetters() => letterCount >= letterDetails.Length;
 
     private void HandleDoorInteraction()
     {
@@ -229,6 +237,7 @@ public class InteractionManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("충돌감지 - 사람");
             isPlayerNear = true;
             interactionUI?.SetActive(true);
         }

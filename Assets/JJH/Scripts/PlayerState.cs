@@ -8,7 +8,6 @@ public class PlayerState : MonoBehaviour
    // private int letterCount = 0;
     private bool hasCrowbar = false;
     private bool hasKey = false;
-    private AudioListener AudioListener;
 
     [Header("Escape UI")]
     public GameObject escapeUI;
@@ -34,8 +33,6 @@ public class PlayerState : MonoBehaviour
     //  }
 
     // public int GetLetterCount() => letterCount;
-
-    public bool HiddenEndingCase() => GameManager.Instance.letterCount >= 5;
 
     // 🔧 Crowbar
     public void ObtainCrowbar()
